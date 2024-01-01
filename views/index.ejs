@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Island+Moments&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="todo">
+      <h1>To-Do List</h1>
+      <form class="row" action="/add" method="post">
+            <input type="text" name="taskName" placeholder="New task"  class="form-control form-control-lg" siez="17"/>
+            <button type="submit">Add</button>
+      </form>
+    </div>
+
+    <div class="grid-container">
+      <div class="grid-item">
+        <h2>Uncompleted Tasks</h2>
+        <ul>
+          <% allTasks.filter(task => !task.completed).forEach(task => { %>
+          <li>
+            <%= task.task_name %>
+            <form action="/complete/<%= task.id %>" method="post" style="display: inline;">
+              <button type="submit">Complete</button>
+            </form>
+          </li>
+          <% }); %>
+        </ul>
+
+      </div>
+      <div class="grid-item">
+        <h2>Completed Tasks</h2>
+        <ul>
+          <% allTasks.filter(task => task.completed).forEach(task => { %>
+          <li>
+            <s><%= task.task_name %></s>
+            <form action="/delete/<%= task.id %>" method="post" style="display: inline;">
+              <button type="submit">Delete</button>
+          </li>
+          <% }); %>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>
+
+<style>
+  body {
+    background: linear-gradient(to right, #F8F6F4, #E3F4F4, #D2E9E9, #C4DFDF);
+    position: relative;
+    top: 80px;
+  }
+  .todo{
+    position: relative;
+    margin: 0 auto;
+  }
+  .todo h1 {
+    color: black;
+    font-size: 70px;
+    font-family: 'Island Moments', cursive;
+    word-wrap: break-word;
+  }
+  .container {
+    width: 50%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px black solid;
+    border-radius: 50px;
+    margin: 0 auto;
+    padding: 5%;
+    background-color: #F8F6F4;
+
+  }
+
+  .grid-container {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+    gap: 150px;
+  }
+
+  .grid-item {
+    margin-top: 5px;
+    border: 0.1rem black solid;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 20px;
+    text-align: center;
+  }
+
+
+  button {
+    background-color: #F8F6F4;
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 50px;
+    margin-top: 5%;
+    transition: all 0.2s ease-in-out;
+}
+
+  button:hover {
+    background-color: #E3F4F4;
+    color: black;
+    transform: scale(1.05);
+
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Media Queries */
+  @media screen and (max-width: 768px) {
+    .container {
+      width: 80%;
+    }
+
+    .grid-container {
+      grid-template-columns: auto;
+      gap: 50px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .container {
+      width: 90%;
+    }
+  }
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
